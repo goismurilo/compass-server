@@ -9,6 +9,7 @@ interface Secretary {
     email: string;
     password?: string;
 }
+
 secretaryRouter.post('/', async (request, response) => {
     try {
         const { name, email, password } = request.body;
