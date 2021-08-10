@@ -1,28 +1,34 @@
 import { Router } from 'express';
 
-import AuthenticateUserService from '../services/AuthenticateTechnicianService';
+import AuthenticateTechnicianService from '../services/AuthenticateTechnicianService';
 
 const sessionsRouter = Router();
 
-interface Technician {
+interface Request {
     email: string;
     password?: string;
+}
+
+interface Response {
+    technician: Request;
+    token: string;
 }
 
 sessionsRouter.post('/', async (request, response) => {
     try {
         const { email, password } = request.body;
 
-        const authenticateUser = new AuthenticateUserService();
+        const authenticateTechnician = new AuthenticateTechnicianService();
 
-        const technician: Technician = await authenticateUser.execute({
-            email,
-            password,
-        });
+        const { technician, token }: Response =
+            await authenticateTechnician.execute({
+                email,
+                password,
+            });
 
         delete technician.password;
 
-        return response.json(technician);
+        return response.json({ technician, token });
     } catch (err) {
         return response.status(400).json({ error: err.message });
     }

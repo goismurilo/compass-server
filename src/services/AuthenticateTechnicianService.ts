@@ -1,5 +1,6 @@
 import { compare } from 'bcryptjs';
 import { getRepository } from 'typeorm';
+import { sign } from 'jsonwebtoken';
 
 import Technician from '../models/Technician';
 
@@ -8,8 +9,13 @@ interface Request {
     password?: string;
 }
 
-class AuthenticateUserService {
-    public async execute({ email, password }: Request): Promise<Technician> {
+interface Response {
+    technician: Technician;
+    token: string;
+}
+
+class AuthenticateTechnicianService {
+    public async execute({ email, password }: Request): Promise<Response> {
         const technicianRepository = getRepository(Technician);
 
         const technician = await technicianRepository.findOne({
@@ -25,8 +31,14 @@ class AuthenticateUserService {
         if (!passwordMachted) {
             throw new Error('Incorrect email/password combination!');
         }
-        return technician;
+
+        const token = sign({}, 'f5479c60a6a2511685c3613142b5cd59', {
+            subject: technician.id,
+            expiresIn: '1d',
+        });
+
+        return { technician, token };
     }
 }
 
-export default AuthenticateUserService;
+export default AuthenticateTechnicianService;
