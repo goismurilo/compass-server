@@ -6,6 +6,7 @@ import secretaryRouter from './secretary.routes';
 import technicianRouter from './technician.routes';
 import serviceRouter from './service.routes';
 import statusRouter from './status.routes';
+import sessionsRouter from './sessions.routes';
 
 const routes = Router();
 
@@ -15,5 +16,6 @@ routes.use('/secretary', secretaryRouter);
 routes.use('/technician', technicianRouter);
 routes.use('/service', serviceRouter);
 routes.use('/status', statusRouter);
+routes.use('/sessions', sessionsRouter);
 
 export default routes;
