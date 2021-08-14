@@ -3,8 +3,11 @@ import { getCustomRepository } from 'typeorm';
 
 import OServicesRepository from '../repositories/OServicesRepository';
 import CreateOSService from '../services/CreateOSService';
+import ensureAuthenticated from '../middlewares/ensureAuthenticated';
 
 const osRouter = Router();
+
+osRouter.use(ensureAuthenticated);
 
 osRouter.get('/', async (request, response) => {
     const oServiceRepository = getCustomRepository(OServicesRepository);

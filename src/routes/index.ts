@@ -10,12 +10,12 @@ import sessionsRouter from './sessions.routes';
 
 const routes = Router();
 
-routes.use('/os', osRouter);
 routes.use('/client', clientRouter);
+routes.use('/os', osRouter);
 routes.use('/secretary', secretaryRouter);
-routes.use('/technician', technicianRouter);
 routes.use('/service', serviceRouter);
-routes.use('/status', statusRouter);
 routes.use('/sessions', sessionsRouter);
+routes.use('/status', statusRouter);
+routes.use('/technician', technicianRouter);
 
 export default routes;
