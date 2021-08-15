@@ -1,8 +1,13 @@
 import { Router } from 'express';
+import multer from 'multer';
+
+import uploadConfig from '../config/upload';
 
 import CreateTechnicianService from '../services/CreateTechnicianService';
+import ensureAuthenticated from '../middlewares/ensureAuthenticated';
 
 const technicianRouter = Router();
+const upload = multer(uploadConfig);
 
 interface Technician {
     name: string;
@@ -28,5 +33,14 @@ technicianRouter.post('/', async (request, response) => {
         return response.status(400).json({ error: err.message });
     }
 });
+
+technicianRouter.patch(
+    '/avatar',
+    ensureAuthenticated,
+    upload.single('avatar'),
+    async (request, response) => {
+        return response.json({ ok: true });
+    },
+);
 
 export default technicianRouter;
