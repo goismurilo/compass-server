@@ -4,6 +4,8 @@ import multer from 'multer';
 import uploadConfig from '../config/upload';
 
 import CreateTechnicianService from '../services/CreateTechnicianService';
+import UpdateTechnicianAvatarService from '../services/UpdateTechnicianAvatarService';
+
 import ensureAuthenticated from '../middlewares/ensureAuthenticated';
 
 const technicianRouter = Router();
@@ -39,7 +41,22 @@ technicianRouter.patch(
     ensureAuthenticated,
     upload.single('avatar'),
     async (request, response) => {
-        return response.json({ ok: true });
+        try {
+            const updateTechnicianAvatar = new UpdateTechnicianAvatarService();
+
+            const technician: Technician = await updateTechnicianAvatar.execute(
+                {
+                    technicianId: request.technician.id,
+                    avatarFilename: request.file?.filename,
+                },
+            );
+
+            delete technician.password;
+
+            return response.json(technician);
+        } catch (err) {
+            return response.status(400).json({ error: err.message });
+        }
     },
 );
 

@@ -20,6 +20,9 @@ class Technician {
     @Column()
     password: string;
 
+    @Column()
+    avatar: string;
+
     @CreateDateColumn()
     createdAt: Date;
 
