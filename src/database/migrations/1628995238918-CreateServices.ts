@@ -1,12 +1,10 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export default class CreateTechnician1628458905512
-    // eslint-disable-next-line prettier/prettier
-    implements MigrationInterface {
+export default class CreateServices1628995238918 implements MigrationInterface {
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.createTable(
             new Table({
-                name: 'technician',
+                name: 'service',
                 columns: [
                     {
                         name: 'id',
@@ -18,18 +16,6 @@ export default class CreateTechnician1628458905512
                     {
                         name: 'name',
                         type: 'varchar',
-                        isNullable: false,
-                    },
-                    {
-                        name: 'email',
-                        type: 'varchar',
-                        isNullable: false,
-                        isUnique: true,
-                    },
-                    {
-                        name: 'password',
-                        type: 'varchar',
-                        isNullable: false,
                     },
                     {
                         name: 'createdAt',
@@ -47,6 +33,6 @@ export default class CreateTechnician1628458905512
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.dropTable('technician');
+        await queryRunner.dropTable('service');
     }
 }

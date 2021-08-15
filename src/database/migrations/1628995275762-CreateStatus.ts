@@ -1,12 +1,10 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export default class CreateSecretary1628465453111
-    // eslint-disable-next-line prettier/prettier
-    implements MigrationInterface {
+export default class CreateStatus1628995275762 implements MigrationInterface {
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.createTable(
             new Table({
-                name: 'secretary',
+                name: 'status',
                 columns: [
                     {
                         name: 'id',
@@ -18,18 +16,6 @@ export default class CreateSecretary1628465453111
                     {
                         name: 'name',
                         type: 'varchar',
-                        isNullable: false,
-                    },
-                    {
-                        name: 'email',
-                        type: 'varchar',
-                        isNullable: false,
-                        isUnique: true,
-                    },
-                    {
-                        name: 'password',
-                        type: 'varchar',
-                        isNullable: false,
                     },
                     {
                         name: 'createdAt',
@@ -47,6 +33,6 @@ export default class CreateSecretary1628465453111
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.dropTable('secretary');
+        await queryRunner.dropTable('status');
     }
 }
