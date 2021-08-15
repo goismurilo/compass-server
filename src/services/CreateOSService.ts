@@ -1,6 +1,5 @@
-import { getCustomRepository } from 'typeorm';
+import { getRepository } from 'typeorm';
 import OService from '../models/OService';
-import OServicesRepository from '../repositories/OServicesRepository';
 
 interface Request {
     clientIDFK: string;
@@ -24,7 +23,7 @@ class CreateOSService {
         statusIDFK,
         isClosed,
     }: Request): Promise<OService> {
-        const oServiceRepository = getCustomRepository(OServicesRepository);
+        const oServiceRepository = getRepository(OService);
 
         const oService = oServiceRepository.create({
             clientIDFK,
