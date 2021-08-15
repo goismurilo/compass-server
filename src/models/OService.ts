@@ -24,20 +24,26 @@ class OService {
     @JoinColumn({ name: 'clientIDFK' })
     client: Client;
 
-    @ManyToOne(() => Technician)
-    @JoinColumn({ name: 'technicianIDFK' })
     @Column()
     technicianIDFK: string;
 
-    @ManyToOne(() => Secretary)
-    @JoinColumn({ name: 'secretaryIDFK' })
+    @ManyToOne(() => Technician)
+    @JoinColumn({ name: 'technicianIDFK' })
+    technician: Technician;
+
     @Column()
     secretaryIDFK: string;
 
-    @ManyToOne(() => Service)
-    @JoinColumn({ name: 'serviceIDFK' })
+    @ManyToOne(() => Secretary)
+    @JoinColumn({ name: 'secretaryIDFK' })
+    secretary: Secretary;
+
     @Column()
     serviceIDFK: string;
+
+    @ManyToOne(() => Service)
+    @JoinColumn({ name: 'serviceIDFK' })
+    service: Service;
 
     @Column()
     obsSecretary: string;
@@ -45,10 +51,12 @@ class OService {
     @Column()
     obsTechnician: string;
 
-    @ManyToOne(() => Status)
-    @JoinColumn({ name: 'statusIDFK' })
     @Column()
     statusIDFK: string;
+
+    @ManyToOne(() => Status)
+    @JoinColumn({ name: 'statusIDFK' })
+    status: Status;
 
     @Column('boolean')
     isClosed: boolean;
