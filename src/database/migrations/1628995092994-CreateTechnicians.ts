@@ -32,6 +32,11 @@ export default class CreateTechnicians1628995092994
                         isNullable: false,
                     },
                     {
+                        name: 'avatar',
+                        type: 'varchar',
+                        isNullable: true,
+                    },
+                    {
                         name: 'createdAt',
                         type: 'timestamp',
                         default: 'now()',

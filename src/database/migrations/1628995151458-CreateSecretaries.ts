@@ -32,6 +32,11 @@ export default class CreateSecretaries1628995151458
                         isNullable: false,
                     },
                     {
+                        name: 'avatar',
+                        type: 'varchar',
+                        isNullable: true,
+                    },
+                    {
                         name: 'createdAt',
                         type: 'timestamp',
                         default: 'now()',
