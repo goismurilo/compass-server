@@ -5,17 +5,13 @@ import CreateStatusService from '../services/CreateStatusService';
 const statusRouter = Router();
 
 statusRouter.post('/', async (request, response) => {
-    try {
-        const { name } = request.body;
-        const createStatus = new CreateStatusService();
+    const { name } = request.body;
+    const createStatus = new CreateStatusService();
 
-        const status = await createStatus.execute({
-            name,
-        });
-        return response.json(status);
-    } catch (err) {
-        return response.status(err.statusCode).json({ error: err.message });
-    }
+    const status = await createStatus.execute({
+        name,
+    });
+    return response.json(status);
 });
 
 export default statusRouter;

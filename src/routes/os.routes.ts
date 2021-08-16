@@ -17,33 +17,29 @@ osRouter.get('/', async (request, response) => {
 });
 
 osRouter.post('/', async (request, response) => {
-    try {
-        const {
-            clientIDFK,
-            technicianIDFK,
-            secretaryIDFK,
-            serviceIDFK,
-            obsSecretary,
-            statusIDFK,
-            isClosed,
-        } = request.body;
+    const {
+        clientIDFK,
+        technicianIDFK,
+        secretaryIDFK,
+        serviceIDFK,
+        obsSecretary,
+        statusIDFK,
+        isClosed,
+    } = request.body;
 
-        const createOS = new CreateOSService();
+    const createOS = new CreateOSService();
 
-        const oService = await createOS.execute({
-            clientIDFK,
-            technicianIDFK,
-            statusIDFK,
-            isClosed,
-            secretaryIDFK,
-            serviceIDFK,
-            obsSecretary,
-        });
+    const oService = await createOS.execute({
+        clientIDFK,
+        technicianIDFK,
+        statusIDFK,
+        isClosed,
+        secretaryIDFK,
+        serviceIDFK,
+        obsSecretary,
+    });
 
-        return response.json(oService);
-    } catch (err) {
-        return response.status(400).json({ error: err.message });
-    }
+    return response.json(oService);
 });
 
 export default osRouter;

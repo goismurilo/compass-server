@@ -41,22 +41,16 @@ technicianRouter.patch(
     ensureAuthenticated,
     upload.single('avatar'),
     async (request, response) => {
-        try {
-            const updateTechnicianAvatar = new UpdateTechnicianAvatarService();
+        const updateTechnicianAvatar = new UpdateTechnicianAvatarService();
 
-            const technician: Technician = await updateTechnicianAvatar.execute(
-                {
-                    technicianId: request.technician.id,
-                    avatarFilename: request.file?.filename,
-                },
-            );
+        const technician: Technician = await updateTechnicianAvatar.execute({
+            technicianId: request.technician.id,
+            avatarFilename: request.file?.filename,
+        });
 
-            delete technician.password;
+        delete technician.password;
 
-            return response.json(technician);
-        } catch (err) {
-            return response.status(err.statusCode).json({ error: err.message });
-        }
+        return response.json(technician);
     },
 );
 

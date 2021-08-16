@@ -15,23 +15,19 @@ interface Response {
 }
 
 sessionsRouter.post('/', async (request, response) => {
-    try {
-        const { email, password } = request.body;
+    const { email, password } = request.body;
 
-        const authenticateTechnician = new AuthenticateTechnicianService();
+    const authenticateTechnician = new AuthenticateTechnicianService();
 
-        const { technician, token }: Response =
-            await authenticateTechnician.execute({
-                email,
-                password,
-            });
+    const { technician, token }: Response =
+        await authenticateTechnician.execute({
+            email,
+            password,
+        });
 
-        delete technician.password;
+    delete technician.password;
 
-        return response.json({ technician, token });
-    } catch (err) {
-        return response.status(err.statusCode).json({ error: err.message });
-    }
+    return response.json({ technician, token });
 });
 
 export default sessionsRouter;
