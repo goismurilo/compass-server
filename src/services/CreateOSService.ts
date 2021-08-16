@@ -1,4 +1,5 @@
 import { getRepository } from 'typeorm';
+
 import OService from '../models/OService';
 
 interface Request {

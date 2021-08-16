@@ -2,9 +2,10 @@ import { getRepository } from 'typeorm';
 import path from 'path';
 import fs from 'fs';
 
-import Technician from '../models/Technician';
-
 import uploadConfig from '../config/upload';
+import AppError from '../errors/AppError';
+
+import Technician from '../models/Technician';
 
 interface Request {
     technicianId: string;
@@ -21,12 +22,13 @@ class UpdateTechnicianAvatarService {
         const technician = await techniciansRepository.findOne(technicianId);
 
         if (!avatarFilename) {
-            throw new Error('Avatar File Name Not Found.');
+            throw new AppError('Avatar File Name Not Found.', 404);
         }
 
         if (!technician) {
-            throw new Error(
+            throw new AppError(
                 'Only authenticated technicians can change avatar.',
+                401,
             );
         }
 
