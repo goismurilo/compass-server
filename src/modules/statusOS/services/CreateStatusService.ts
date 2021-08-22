@@ -1,6 +1,6 @@
 import { getRepository } from 'typeorm';
 
-import Status from '../entities/Status';
+import Status from '../infra/typeorm/entities/Status';
 
 interface Request {
     name: string;

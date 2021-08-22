@@ -5,7 +5,7 @@ import { sign } from 'jsonwebtoken';
 import AppError from '../../../shared/errors/AppError';
 
 import authConfig from '../../../config/auth';
-import Technician from '../entities/Technician';
+import Technician from '../infra/typeorm/entities/Technician';
 
 interface Request {
     email: string;

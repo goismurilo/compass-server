@@ -3,7 +3,7 @@ import { getRepository } from 'typeorm';
 
 import AppError from '../../../shared/errors/AppError';
 
-import Technician from '../entities/Technician';
+import Technician from '../infra/typeorm/entities/Technician';
 
 interface Request {
     name: string;
