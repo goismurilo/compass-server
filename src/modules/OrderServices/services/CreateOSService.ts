@@ -1,6 +1,6 @@
 import { getRepository } from 'typeorm';
 
-import OService from '../models/OService';
+import OService from '../entities/OService';
 
 interface Request {
     clientIDFK: string;

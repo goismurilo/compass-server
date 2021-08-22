@@ -4,12 +4,12 @@ import express, { Request, Response, NextFunction } from 'express';
 import 'express-async-errors';
 
 import cors from 'cors';
-import routes from './routes';
+import routes from './shared/routes';
 
 import UploadConfig from './config/upload';
-import AppError from './errors/AppError';
+import AppError from './shared/errors/AppError';
 
-import './database';
+import './shared/database';
 
 const app = express();
 

@@ -1,10 +1,10 @@
 import { Router } from 'express';
 import multer from 'multer';
 
-import uploadConfig from '../config/upload';
+import uploadConfig from '../../config/upload';
 
-import CreateTechnicianService from '../services/CreateTechnicianService';
-import UpdateTechnicianAvatarService from '../services/UpdateTechnicianAvatarService';
+import CreateTechnicianService from '../../modules/technicians/services/CreateTechnicianService';
+import UpdateTechnicianAvatarService from '../../modules/technicians/services/UpdateTechnicianAvatarService';
 
 import ensureAuthenticated from '../middlewares/ensureAuthenticated';
 

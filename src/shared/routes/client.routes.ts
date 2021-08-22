@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import CreateClientService from '../services/CreateClientService';
+import CreateClientService from '../../modules/clients/services/CreateClientService';
 
 const clientRouter = Router();
 

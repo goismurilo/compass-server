@@ -1,7 +1,7 @@
 import { getRepository } from 'typeorm';
 import { hash } from 'bcryptjs';
 
-import Secretary from '../models/Secretary';
+import Secretary from '../entities/Secretary';
 
 interface Request {
     name: string;

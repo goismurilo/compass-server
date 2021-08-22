@@ -1,6 +1,6 @@
 import { getRepository } from 'typeorm';
 
-import Service from '../models/Service';
+import Service from '../entities/Service';
 
 interface Request {
     name: string;

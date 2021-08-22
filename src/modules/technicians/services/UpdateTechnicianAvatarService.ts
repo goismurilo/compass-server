@@ -2,10 +2,10 @@ import { getRepository } from 'typeorm';
 import path from 'path';
 import fs from 'fs';
 
-import uploadConfig from '../config/upload';
-import AppError from '../errors/AppError';
+import uploadConfig from '../../../config/upload';
+import AppError from '../../../shared/errors/AppError';
 
-import Technician from '../models/Technician';
+import Technician from '../entities/Technician';
 
 interface Request {
     technicianId: string;

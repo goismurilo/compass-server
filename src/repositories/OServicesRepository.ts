@@ -1,5 +1,5 @@
 import { EntityRepository, Repository } from 'typeorm';
-import OService from '../models/OService';
+import OService from '../modules/OrderServices/entities/OService';
 
 @EntityRepository(OService)
 // eslint-disable-next-line prettier/prettier
