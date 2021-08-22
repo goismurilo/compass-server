@@ -1,12 +1,12 @@
 import { Router } from 'express';
 import multer from 'multer';
 
-import uploadConfig from '../../../../config/upload';
+import uploadConfig from '@config/upload';
 
-import CreateTechnicianService from '../../../../modules/technicians/services/CreateTechnicianService';
-import UpdateTechnicianAvatarService from '../../../../modules/technicians/services/UpdateTechnicianAvatarService';
+import CreateTechnicianService from '@modules/technicians/services/CreateTechnicianService';
+import UpdateTechnicianAvatarService from '@modules/technicians/services/UpdateTechnicianAvatarService';
 
-import ensureAuthenticated from '../middlewares/ensureAuthenticated';
+import ensureAuthenticated from '@modules/technicians/infra/http/middlewares/ensureAuthenticated';
 
 const technicianRouter = Router();
 const upload = multer(uploadConfig);

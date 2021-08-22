@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import CreateSecretaryService from '../../../../modules/secretaries/services/CreateSecretaryService';
+import CreateSecretaryService from '@modules/secretaries/services/CreateSecretaryService';
 
 const secretaryRouter = Router();
 

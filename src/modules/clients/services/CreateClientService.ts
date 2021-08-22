@@ -1,6 +1,6 @@
 import { getRepository } from 'typeorm';
 
-import Client from '../infra/typeorm/entities/Client';
+import Client from '@modules/clients/infra/typeorm/entities/Client';
 
 interface Request {
     name: string;

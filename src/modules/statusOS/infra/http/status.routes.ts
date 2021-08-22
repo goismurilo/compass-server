@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import CreateStatusService from '../../../../modules/statusOS/services/CreateStatusService';
+import CreateStatusService from '@modules/statusOS/services/CreateStatusService';
 
 const statusRouter = Router();
 

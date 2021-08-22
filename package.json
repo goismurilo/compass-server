@@ -2,13 +2,14 @@
     "name": "compass-server",
     "version": "1.0.0",
     "main": "index.js",
-    "repository": "git@github.com:mnobru/compass-server.git",
-    "author": "mnobru <mnobrusystem@gmail.com>",
+    "repository": "git@github.com:goismurilo/compass-server.git",
+    "author": "goismurilo <murilogois59@gmail.com>",
     "license": "MIT",
     "scripts": {
         "build": "tsc",
-        "dev:server": "ts-node-dev --inspect --transpile-only --ignore-watch node_modules src/server.ts",
-        "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js"
+        "dev:server": "ts-node-dev -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules src/shared/infra/http/server.ts",
+        "start": "ts-node -r tsconfig-paths/register src/shared/infra/http/server.ts",
+        "typeorm": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli.js"
     },
     "dependencies": {
         "bcryptjs": "^2.4.3",
@@ -39,6 +40,7 @@
         "eslint-plugin-prettier": "^3.4.0",
         "prettier": "^2.3.2",
         "ts-node-dev": "^1.1.8",
+        "tsconfig-paths": "^3.10.1",
         "typescript": "^4.3.5"
     }
 }

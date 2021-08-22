@@ -1,6 +1,6 @@
 import { getRepository } from 'typeorm';
 
-import OService from '../infra/typeorm/entities/OService';
+import OService from '@modules/orderServices/infra/typeorm/entities/OService';
 
 interface Request {
     clientIDFK: string;

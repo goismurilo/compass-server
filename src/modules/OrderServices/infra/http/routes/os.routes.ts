@@ -1,9 +1,9 @@
 import { Router } from 'express';
 import { getCustomRepository } from 'typeorm';
 
-import OServicesRepository from '../../../../repositories/OServicesRepository';
-import CreateOSService from '../../../../modules/OrderServices/services/CreateOSService';
-import ensureAuthenticated from '../middlewares/ensureAuthenticated';
+import OServicesRepository from '@modules/servicesOS/repositories/OServicesRepository';
+import ensureAuthenticated from '@modules/technicians/infra/http/middlewares/ensureAuthenticated';
+import CreateOSService from '@modules/orderServices/services/CreateOSService';
 
 const osRouter = Router();
 

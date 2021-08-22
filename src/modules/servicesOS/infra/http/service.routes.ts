@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import CreateServiceService from '../../../../modules/servicesOS/services/CreateServiceService';
+import CreateServiceService from '@modules/servicesOS/services/CreateServiceService';
 
 const serviceRouter = Router();
 

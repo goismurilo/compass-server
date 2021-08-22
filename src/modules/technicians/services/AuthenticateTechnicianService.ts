@@ -2,10 +2,10 @@ import { compare } from 'bcryptjs';
 import { getRepository } from 'typeorm';
 import { sign } from 'jsonwebtoken';
 
-import AppError from '../../../shared/errors/AppError';
+import AppError from '@shared/errors/AppError';
 
-import authConfig from '../../../config/auth';
-import Technician from '../infra/typeorm/entities/Technician';
+import authConfig from '@config/auth';
+import Technician from '@modules/technicians/infra/typeorm/entities/Technician';
 
 interface Request {
     email: string;

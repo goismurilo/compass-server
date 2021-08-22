@@ -1,12 +1,12 @@
 import { Router } from 'express';
 
-import clientRouter from './client.routes';
-import osRouter from './os.routes';
-import secretaryRouter from './secretary.routes';
-import technicianRouter from './technician.routes';
-import serviceRouter from './service.routes';
-import statusRouter from './status.routes';
-import sessionsRouter from './sessions.routes';
+import clientRouter from '@modules/clients/infra/http/routes/client.routes';
+import osRouter from '@modules/orderServices/infra/http/routes/os.routes';
+import secretaryRouter from '@modules/secretaries/infra/http/secretary.routes';
+import technicianRouter from '@modules/technicians/infra/http/routes/technician.routes';
+import serviceRouter from '@modules/servicesOS/infra/http/service.routes';
+import statusRouter from '@modules/statusOS/infra/http/status.routes';
+import sessionsRouter from '@modules/technicians/infra/http/routes/sessions.routes';
 
 const routes = Router();
 
