@@ -1,5 +1,7 @@
+/* eslint-disable prettier/prettier */
 import path from 'path';
 import fs from 'fs';
+import { inject, injectable } from 'tsyringe';
 
 import uploadConfig from '@config/upload';
 import AppError from '@shared/errors/AppError';
@@ -12,9 +14,12 @@ interface IRequest {
     avatarFilename?: string;
 }
 
+@injectable()
 class UpdateTechnicianAvatarService {
-    // eslint-disable-next-line prettier/prettier
-    constructor(private techniciansRepository: ITechniciansRepository) { }
+    constructor(
+        @inject('TechniciansRepository')
+        private techniciansRepository: ITechniciansRepository,
+    ) { }
 
     public async execute({
         technicianId,

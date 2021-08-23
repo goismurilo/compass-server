@@ -1,6 +1,7 @@
 import { Router } from 'express';
 
-import TechniciansRepository from '@modules/technicians/infra/typeorm/repositories/TechniciansRepository';
+import { container } from 'tsyringe';
+
 import AuthenticateTechnicianService from '@modules/technicians/services/AuthenticateTechnicianService';
 
 const sessionsRouter = Router();
@@ -16,12 +17,10 @@ interface IResponse {
 }
 
 sessionsRouter.post('/', async (request, response) => {
-    const techniciansRepository = new TechniciansRepository();
-
     const { email, password } = request.body;
 
-    const authenticateTechnician = new AuthenticateTechnicianService(
-        techniciansRepository,
+    const authenticateTechnician = container.resolve(
+        AuthenticateTechnicianService,
     );
 
     const { technician, token }: IResponse =

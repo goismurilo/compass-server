@@ -1,3 +1,6 @@
+/* eslint-disable prettier/prettier */
+import { injectable, inject } from 'tsyringe';
+
 import OService from '@modules/orderServices/infra/typeorm/entities/OService';
 import IOServicesRepository from '../repositories/IOServicesRepository';
 
@@ -13,9 +16,12 @@ interface IRequest {
     isClosed: boolean;
 }
 
+@injectable()
 class CreateOSService {
-    // eslint-disable-next-line prettier/prettier
-    constructor(private orderServicesRepository: IOServicesRepository) { }
+    constructor(
+        @inject('OServicesRepository')
+        private orderServicesRepository: IOServicesRepository,
+    ) { }
 
     public async execute({
         clientIDFK,

@@ -1,4 +1,6 @@
+/* eslint-disable prettier/prettier */
 import { hash } from 'bcryptjs';
+import { inject, injectable } from 'tsyringe';
 
 import AppError from '@shared/errors/AppError';
 
@@ -12,9 +14,12 @@ interface IRequest {
     password: string;
 }
 
+@injectable()
 class CreateTechnicianService {
-    // eslint-disable-next-line prettier/prettier
-    constructor(private techniciansRepository: ITechniciansRepository) { }
+    constructor(
+        @inject('TechnicianRepository')
+        private techniciansRepository: ITechniciansRepository,
+    ) { }
 
     public async execute({
         name,

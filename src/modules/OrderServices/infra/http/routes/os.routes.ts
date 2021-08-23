@@ -1,5 +1,7 @@
 import { Router } from 'express';
 
+import { container } from 'tsyringe';
+
 import OServicesRepository from '@modules/orderServices/infra/typeorm/repositories/OServicesRepository';
 import ensureAuthenticated from '@modules/technicians/infra/http/middlewares/ensureAuthenticated';
 import CreateOSService from '@modules/orderServices/services/CreateOSService';
@@ -16,7 +18,7 @@ osRouter.use(ensureAuthenticated);
 // });
 
 osRouter.post('/', async (request, response) => {
-    const orderServicesRepository = new OServicesRepository();
+    const orderServicesRepository = container.resolve(OServicesRepository);
 
     const {
         clientIDFK,

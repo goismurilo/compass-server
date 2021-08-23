@@ -1,9 +1,8 @@
 import { Router } from 'express';
 import multer from 'multer';
+import { container } from 'tsyringe';
 
 import uploadConfig from '@config/upload';
-
-import TechniciansRepository from '@modules/technicians/infra/typeorm/repositories/TechniciansRepository';
 
 import CreateTechnicianService from '@modules/technicians/services/CreateTechnicianService';
 import UpdateTechnicianAvatarService from '@modules/technicians/services/UpdateTechnicianAvatarService';
@@ -20,10 +19,8 @@ interface ITechnician {
 }
 
 technicianRouter.post('/', async (request, response) => {
-    const techniciansRepository = new TechniciansRepository();
-
     const { name, email, password } = request.body;
-    const createTechnician = new CreateTechnicianService(techniciansRepository);
+    const createTechnician = container.resolve(CreateTechnicianService);
 
     const technician: ITechnician = await createTechnician.execute({
         name,
@@ -41,10 +38,8 @@ technicianRouter.patch(
     ensureAuthenticated,
     upload.single('avatar'),
     async (request, response) => {
-        const techniciansRepository = new TechniciansRepository();
-
-        const updateTechnicianAvatar = new UpdateTechnicianAvatarService(
-            techniciansRepository,
+        const updateTechnicianAvatar = container.resolve(
+            UpdateTechnicianAvatarService,
         );
 
         const technician: ITechnician = await updateTechnicianAvatar.execute({

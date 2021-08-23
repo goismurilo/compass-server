@@ -1,5 +1,7 @@
+/* eslint-disable prettier/prettier */
 import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
+import { inject, injectable } from 'tsyringe';
 
 import AppError from '@shared/errors/AppError';
 
@@ -17,9 +19,12 @@ interface IResponse {
     token: string;
 }
 
+@injectable()
 class AuthenticateTechnicianService {
-    // eslint-disable-next-line prettier/prettier
-    constructor(private techniciansRepository: ITechniciansRepository) { }
+    constructor(
+        @inject('TechniciansRepository')
+        private techniciansRepository: ITechniciansRepository,
+    ) { }
 
     public async execute({ email, password }: IRequest): Promise<IResponse> {
         const technician = await this.techniciansRepository.findByEmail(email);
