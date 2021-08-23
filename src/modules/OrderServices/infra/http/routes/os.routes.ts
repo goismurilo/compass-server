@@ -1,12 +1,10 @@
 import { Router } from 'express';
 
-import { container } from 'tsyringe';
-
-import OServicesRepository from '@modules/orderServices/infra/typeorm/repositories/OServicesRepository';
 import ensureAuthenticated from '@modules/technicians/infra/http/middlewares/ensureAuthenticated';
-import CreateOSService from '@modules/orderServices/services/CreateOSService';
+import OrderServicesController from '../controllers/OrderServicesController';
 
 const osRouter = Router();
+const orderServicesController = new OrderServicesController();
 
 osRouter.use(ensureAuthenticated);
 
@@ -17,32 +15,6 @@ osRouter.use(ensureAuthenticated);
 //     return response.json(oServices);
 // });
 
-osRouter.post('/', async (request, response) => {
-    const orderServicesRepository = container.resolve(OServicesRepository);
-
-    const {
-        clientIDFK,
-        technicianIDFK,
-        secretaryIDFK,
-        serviceIDFK,
-        obsSecretary,
-        statusIDFK,
-        isClosed,
-    } = request.body;
-
-    const createOS = new CreateOSService(orderServicesRepository);
-
-    const oService = await createOS.execute({
-        clientIDFK,
-        technicianIDFK,
-        statusIDFK,
-        isClosed,
-        secretaryIDFK,
-        serviceIDFK,
-        obsSecretary,
-    });
-
-    return response.json(oService);
-});
+osRouter.post('/', orderServicesController.create);
 
 export default osRouter;
