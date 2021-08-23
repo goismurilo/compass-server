@@ -28,15 +28,28 @@
         "@typescript-eslint/no-use-before-define": [
             "error"
         ],
+        "@typescript-eslint/naming-convention": [
+            "error",
+            {
+                "selector": "interface",
+                "format": [
+                    "PascalCase"
+                ],
+                "custom": {
+                    "regex": "^I[A-Z]",
+                    "match": true
+                }
+            }
+        ],
+        "prettier/prettier": "error",
+        "class-methods-use-this": "off",
         "import/extensions": [
             "error",
             "ignorePackages",
             {
                 "ts": "never"
             }
-        ],
-        "prettier/prettier": "error",
-        "class-methods-use-this": "off"
+        ]
     },
     "settings": {
         "import/resolver": {

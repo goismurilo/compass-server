@@ -2,7 +2,7 @@ import { getRepository } from 'typeorm';
 
 import OService from '@modules/orderServices/infra/typeorm/entities/OService';
 
-interface Request {
+interface IRequest {
     clientIDFK: string;
     technicianIDFK: string;
     secretaryIDFK: string;
@@ -23,7 +23,7 @@ class CreateOSService {
         obsSecretary,
         statusIDFK,
         isClosed,
-    }: Request): Promise<OService> {
+    }: IRequest): Promise<OService> {
         const oServiceRepository = getRepository(OService);
 
         const oService = oServiceRepository.create({

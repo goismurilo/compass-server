@@ -6,11 +6,11 @@ import {
     ManyToOne,
     JoinColumn,
 } from 'typeorm';
-import Client from '../../../../clients/infra/typeorm/entities/Client';
-import Secretary from '../../../../secretaries/infra/typeorm/entities/Secretary';
-import Service from '../../../../servicesOS/infra/typeorm/entities/Service';
-import Status from '../../../../statusOS/infra/typeorm/entities/Status';
-import Technician from '../../../../technicians/infra/typeorm/entities/Technician';
+import Client from '@modules/clients/infra/typeorm/entities/Client';
+import Secretary from '@modules/secretaries/infra/typeorm/entities/Secretary';
+import Service from '@modules/servicesOS/infra/typeorm/entities/Service';
+import Status from '@modules/statusOS/infra/typeorm/entities/Status';
+import Technician from '@modules/technicians/infra/typeorm/entities/Technician';
 
 @Entity('os')
 class OService {
