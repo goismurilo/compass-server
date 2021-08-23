@@ -1,6 +1,7 @@
-import { getRepository } from 'typeorm';
+import { getCustomRepository } from 'typeorm';
 
 import OService from '@modules/orderServices/infra/typeorm/entities/OService';
+import OServicesRepository from '@modules/orderServices/infra/typeorm/repositories/OServicesRepository';
 
 interface IRequest {
     clientIDFK: string;
@@ -24,9 +25,9 @@ class CreateOSService {
         statusIDFK,
         isClosed,
     }: IRequest): Promise<OService> {
-        const oServiceRepository = getRepository(OService);
+        const oServiceRepository = getCustomRepository(OServicesRepository);
 
-        const oService = oServiceRepository.create({
+        const oService = await oServiceRepository.create({
             clientIDFK,
             technicianIDFK,
             secretaryIDFK,
@@ -35,8 +36,6 @@ class CreateOSService {
             statusIDFK,
             isClosed,
         });
-
-        await oServiceRepository.save(oService);
 
         return oService;
     }
