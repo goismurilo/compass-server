@@ -5,17 +5,19 @@ import ensureAuthenticated from '@modules/technicians/infra/http/middlewares/ens
 import CreateOSService from '@modules/orderServices/services/CreateOSService';
 
 const osRouter = Router();
-const orderServicesRepository = new OServicesRepository();
 
 osRouter.use(ensureAuthenticated);
 
 // osRouter.get('/', async (request, response) => {
+//     const orderServicesRepository = new OServicesRepository();
 //     const oServices = await orderServicesRepository.find();
 
 //     return response.json(oServices);
 // });
 
 osRouter.post('/', async (request, response) => {
+    const orderServicesRepository = new OServicesRepository();
+
     const {
         clientIDFK,
         technicianIDFK,

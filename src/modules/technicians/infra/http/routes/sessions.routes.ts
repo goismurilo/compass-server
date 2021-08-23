@@ -1,25 +1,30 @@
 import { Router } from 'express';
 
+import TechniciansRepository from '@modules/technicians/infra/typeorm/repositories/TechniciansRepository';
 import AuthenticateTechnicianService from '@modules/technicians/services/AuthenticateTechnicianService';
 
 const sessionsRouter = Router();
 
-interface Request {
+interface IRequest {
     email: string;
     password?: string;
 }
 
-interface Response {
-    technician: Request;
+interface IResponse {
+    technician: IRequest;
     token: string;
 }
 
 sessionsRouter.post('/', async (request, response) => {
+    const techniciansRepository = new TechniciansRepository();
+
     const { email, password } = request.body;
 
-    const authenticateTechnician = new AuthenticateTechnicianService();
+    const authenticateTechnician = new AuthenticateTechnicianService(
+        techniciansRepository,
+    );
 
-    const { technician, token }: Response =
+    const { technician, token }: IResponse =
         await authenticateTechnician.execute({
             email,
             password,

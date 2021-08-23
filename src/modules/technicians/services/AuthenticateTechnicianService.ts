@@ -1,29 +1,28 @@
 import { compare } from 'bcryptjs';
-import { getRepository } from 'typeorm';
 import { sign } from 'jsonwebtoken';
 
 import AppError from '@shared/errors/AppError';
 
 import authConfig from '@config/auth';
 import Technician from '@modules/technicians/infra/typeorm/entities/Technician';
+import ITechniciansRepository from '../repositories/ITechniciansRepository';
 
-interface Request {
+interface IRequest {
     email: string;
     password?: string;
 }
 
-interface Response {
+interface IResponse {
     technician: Technician;
     token: string;
 }
 
 class AuthenticateTechnicianService {
-    public async execute({ email, password }: Request): Promise<Response> {
-        const technicianRepository = getRepository(Technician);
+    // eslint-disable-next-line prettier/prettier
+    constructor(private techniciansRepository: ITechniciansRepository) { }
 
-        const technician = await technicianRepository.findOne({
-            where: { email },
-        });
+    public async execute({ email, password }: IRequest): Promise<IResponse> {
+        const technician = await this.techniciansRepository.findByEmail(email);
 
         if (!technician || !password) {
             throw new AppError('Incorrect email/password combination!', 401);

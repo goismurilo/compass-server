@@ -1,4 +1,3 @@
-import { getRepository } from 'typeorm';
 import path from 'path';
 import fs from 'fs';
 
@@ -6,20 +5,24 @@ import uploadConfig from '@config/upload';
 import AppError from '@shared/errors/AppError';
 
 import Technician from '@modules/technicians/infra/typeorm/entities/Technician';
+import ITechniciansRepository from '../repositories/ITechniciansRepository';
 
-interface Request {
+interface IRequest {
     technicianId: string;
     avatarFilename?: string;
 }
 
 class UpdateTechnicianAvatarService {
+    // eslint-disable-next-line prettier/prettier
+    constructor(private techniciansRepository: ITechniciansRepository) { }
+
     public async execute({
         technicianId,
         avatarFilename,
-    }: Request): Promise<Technician> {
-        const techniciansRepository = getRepository(Technician);
-
-        const technician = await techniciansRepository.findOne(technicianId);
+    }: IRequest): Promise<Technician> {
+        const technician = await this.techniciansRepository.findById(
+            technicianId,
+        );
 
         if (!avatarFilename) {
             throw new AppError('Avatar File Name Not Found.', 404);
@@ -48,7 +51,7 @@ class UpdateTechnicianAvatarService {
 
         technician.avatar = avatarFilename;
 
-        await techniciansRepository.save(technician);
+        await this.techniciansRepository.save(technician);
 
         return technician;
     }
