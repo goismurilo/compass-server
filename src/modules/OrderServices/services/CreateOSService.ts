@@ -1,7 +1,5 @@
-import { getCustomRepository } from 'typeorm';
-
 import OService from '@modules/orderServices/infra/typeorm/entities/OService';
-import OServicesRepository from '@modules/orderServices/infra/typeorm/repositories/OServicesRepository';
+import IOServicesRepository from '../repositories/IOServicesRepository';
 
 interface IRequest {
     clientIDFK: string;
@@ -16,6 +14,9 @@ interface IRequest {
 }
 
 class CreateOSService {
+    // eslint-disable-next-line prettier/prettier
+    constructor(private orderServicesRepository: IOServicesRepository) { }
+
     public async execute({
         clientIDFK,
         technicianIDFK,
@@ -25,9 +26,7 @@ class CreateOSService {
         statusIDFK,
         isClosed,
     }: IRequest): Promise<OService> {
-        const oServiceRepository = getCustomRepository(OServicesRepository);
-
-        const oService = await oServiceRepository.create({
+        const oService = await this.orderServicesRepository.create({
             clientIDFK,
             technicianIDFK,
             secretaryIDFK,

@@ -1,20 +1,19 @@
 import { Router } from 'express';
-import { getCustomRepository } from 'typeorm';
 
 import OServicesRepository from '@modules/orderServices/infra/typeorm/repositories/OServicesRepository';
 import ensureAuthenticated from '@modules/technicians/infra/http/middlewares/ensureAuthenticated';
 import CreateOSService from '@modules/orderServices/services/CreateOSService';
 
 const osRouter = Router();
+const orderServicesRepository = new OServicesRepository();
 
 osRouter.use(ensureAuthenticated);
 
-osRouter.get('/', async (request, response) => {
-    const oServiceRepository = getCustomRepository(OServicesRepository);
-    const oServices = await oServiceRepository.find();
+// osRouter.get('/', async (request, response) => {
+//     const oServices = await orderServicesRepository.find();
 
-    return response.json(oServices);
-});
+//     return response.json(oServices);
+// });
 
 osRouter.post('/', async (request, response) => {
     const {
@@ -27,7 +26,7 @@ osRouter.post('/', async (request, response) => {
         isClosed,
     } = request.body;
 
-    const createOS = new CreateOSService();
+    const createOS = new CreateOSService(orderServicesRepository);
 
     const oService = await createOS.execute({
         clientIDFK,
