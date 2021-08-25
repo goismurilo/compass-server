@@ -1,4 +1,4 @@
-import { getRepository, Repository } from 'typeorm';
+import { uuid } from 'uuidv4';
 
 import ICreateTechnicianDTO from '@modules/technicians/dtos/ICreateTechnicianDTO';
 import ITechniciansRepository from '@modules/technicians/repositories/ITechniciansRepository';
@@ -6,36 +6,42 @@ import ITechniciansRepository from '@modules/technicians/repositories/ITechnicia
 import Technician from '@modules/technicians/infra/typeorm/entities/Technician';
 
 class TechniciansRepository implements ITechniciansRepository {
-    private ormRepository: Repository<Technician>;
-
-    constructor() {
-        this.ormRepository = getRepository(Technician);
-    }
+    private technicians: Technician[] = [];
 
     public async findById(id: string): Promise<Technician | undefined> {
-        const findTechnician = await this.ormRepository.findOne(id);
+        const findTechnician = this.technicians.find(
+            technician => technician.id === id,
+        );
 
         return findTechnician;
     }
 
     public async findByEmail(email: string): Promise<Technician | undefined> {
-        const findTechnician = await this.ormRepository.findOne({
-            where: email,
-        });
+        const findTechnician = this.technicians.find(
+            technician => technician.email === email,
+        );
 
         return findTechnician;
     }
 
     public async create(userData: ICreateTechnicianDTO): Promise<Technician> {
-        const technician = this.ormRepository.create(userData);
+        const technician = new Technician();
 
-        await this.ormRepository.save(technician);
+        Object.assign(technician, { id: uuid() }, userData);
+
+        this.technicians.push(technician);
 
         return technician;
     }
 
     public async save(technician: Technician): Promise<Technician> {
-        return this.ormRepository.save(technician);
+        const findIndex = this.technicians.findIndex(
+            findTechnician => findTechnician.id === technician.id,
+        );
+
+        this.technicians[findIndex] = technician;
+
+        return technician;
     }
 }
 
