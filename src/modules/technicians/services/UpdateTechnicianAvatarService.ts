@@ -1,12 +1,10 @@
 /* eslint-disable prettier/prettier */
-import path from 'path';
-import fs from 'fs';
 import { inject, injectable } from 'tsyringe';
 
-import uploadConfig from '@config/upload';
 import AppError from '@shared/errors/AppError';
 
 import Technician from '@modules/technicians/infra/typeorm/entities/Technician';
+import IStorageProvider from '@shared/container/providers/StorageProvider/models/IStorageProvider';
 import ITechniciansRepository from '../repositories/ITechniciansRepository';
 
 interface IRequest {
@@ -19,6 +17,9 @@ class UpdateTechnicianAvatarService {
     constructor(
         @inject('TechniciansRepository')
         private techniciansRepository: ITechniciansRepository,
+
+        @inject('StorageProvider')
+        private storageProvider: IStorageProvider,
     ) { }
 
     public async execute({
@@ -41,20 +42,12 @@ class UpdateTechnicianAvatarService {
         }
 
         if (technician.avatar) {
-            const technicianAvatarFilePath = path.join(
-                uploadConfig.directory,
-                technician.avatar,
-            );
-            const technicianAvatarFileExists = await fs.promises.stat(
-                technicianAvatarFilePath,
-            );
-
-            if (technicianAvatarFileExists) {
-                await fs.promises.unlink(technicianAvatarFilePath);
-            }
+            await this.storageProvider.deleteFile(technician.avatar);
         }
 
-        technician.avatar = avatarFilename;
+        const filename = await this.storageProvider.saveFile(avatarFilename);
+
+        technician.avatar = filename;
 
         await this.techniciansRepository.save(technician);
 

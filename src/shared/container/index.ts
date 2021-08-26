@@ -1,6 +1,7 @@
 import { container } from 'tsyringe';
 
 import '@modules/technicians/providers';
+import './providers';
 
 import IOServicesRepository from '@modules/orderServices/repositories/IOServicesRepository';
 import OServicesRepository from '@modules/orderServices/infra/typeorm/repositories/OServicesRepository';
