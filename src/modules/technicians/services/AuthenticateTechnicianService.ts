@@ -1,5 +1,4 @@
 /* eslint-disable prettier/prettier */
-import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
 import { inject, injectable } from 'tsyringe';
 
@@ -8,6 +7,8 @@ import AppError from '@shared/errors/AppError';
 import authConfig from '@config/auth';
 import Technician from '@modules/technicians/infra/typeorm/entities/Technician';
 import ITechniciansRepository from '../repositories/ITechniciansRepository';
+import IHashProvider from '../providers/HashProvider/models/IHashProvider';
+
 
 interface IRequest {
     email: string;
@@ -24,6 +25,9 @@ class AuthenticateTechnicianService {
     constructor(
         @inject('TechniciansRepository')
         private techniciansRepository: ITechniciansRepository,
+
+        @inject('HashProvider')
+        private hashProvider: IHashProvider
     ) { }
 
     public async execute({ email, password }: IRequest): Promise<IResponse> {
@@ -33,7 +37,7 @@ class AuthenticateTechnicianService {
             throw new AppError('Incorrect email/password combination!', 401);
         }
 
-        const passwordMachted = await compare(password, technician.password);
+        const passwordMachted = await this.hashProvider.compareHash(password, technician.password);
 
         if (!passwordMachted) {
             throw new AppError('Incorrect email/password combination!', 401);
