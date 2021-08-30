@@ -6,6 +6,7 @@ import { inject, injectable } from 'tsyringe';
 // import Technician from '@modules/technicians/infra/typeorm/entities/Technician';
 
 import IMailProvider from '@shared/container/providers/MailProvider/models/IMailProvider';
+import AppError from '@shared/errors/AppError';
 import ITechniciansRepository from '../repositories/ITechniciansRepository';
 
 interface IRequest {
@@ -23,6 +24,12 @@ class SendForgotPasswordEmailService {
     ) { }
 
     public async execute({ email }: IRequest): Promise<void> {
+        const checkTechnicianExists = await this.techniciansRepository.findByEmail(email);
+
+        if (!checkTechnicianExists) {
+            throw new AppError('Technician does not exists');
+        }
+
         this.mailProvider.sendMail(email, 'Pedido de Recuperação de Senha')
     }
 }

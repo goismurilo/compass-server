@@ -1,3 +1,4 @@
+import AppError from '@shared/errors/AppError';
 import FakeMailProvider from '@shared/container/providers/MailProvider/fakes/FakeMailProvider';
 import FakeTechniciansRepository from '../repositories/fakes/FakeTechniciansRepository';
 
@@ -26,5 +27,21 @@ describe('SendForgotPasswordEmailService', () => {
         });
 
         expect(sendMail).toHaveBeenCalled();
+    });
+
+    it('should not be able to recover a non-existing technician password', async () => {
+        const fakeTechniciansRepository = new FakeTechniciansRepository();
+        const fakeMailProvider = new FakeMailProvider();
+
+        const sendForgotPasswordEmail = new SendForgotPasswordEmailService(
+            fakeTechniciansRepository,
+            fakeMailProvider,
+        );
+
+        await expect(
+            sendForgotPasswordEmail.execute({
+                email: 'cristovao@gmail.com',
+            }),
+        ).rejects.toBeInstanceOf(AppError);
     });
 });
