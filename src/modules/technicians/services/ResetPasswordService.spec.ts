@@ -34,29 +34,6 @@ describe('ResetPasswordService', () => {
             technician.id,
         );
 
-        await resetPassword.execute({
-            password: '123123',
-            token,
-        });
-
-        const updateTechnician = await fakeTechniciansRepository.findById(
-            technician.id,
-        );
-
-        expect(updateTechnician?.password).toBe('123123');
-    });
-
-    it('should be able to reset password', async () => {
-        const technician = await fakeTechniciansRepository.create({
-            name: 'Cristovao',
-            email: 'cristovao@gmail.com',
-            password: '123126',
-        });
-
-        const { token } = await fakeTechnicianTokensRepository.generate(
-            technician.id,
-        );
-
         const generateHash = jest.spyOn(fakeHashProvider, 'generateHash');
 
         await resetPassword.execute({
