@@ -7,6 +7,7 @@ import { inject, injectable } from 'tsyringe';
 import AppError from '@shared/errors/AppError';
 import ITechniciansRepository from '../repositories/ITechniciansRepository';
 import ITechnicianTokensRepository from '../repositories/ITechnicianTokensRepository';
+import IHashProvider from '../providers/HashProvider/models/IHashProvider';
 
 interface IRequest {
     token: string;
@@ -21,6 +22,9 @@ class ResetPasswordService {
 
         @inject('TechnicianTokensRepository')
         private technicianTokensRepository: ITechnicianTokensRepository,
+
+        @inject('HashProvider')
+        private hashProvider: IHashProvider,
     ) { }
 
     public async execute({ token, password }: IRequest): Promise<void> {
@@ -36,7 +40,7 @@ class ResetPasswordService {
             throw new AppError('Technician does not exists');
         }
 
-        technician.password = password;
+        technician.password = await this.hashProvider.generateHash(password);
 
         await this.techniciansRepository.save(technician);
     }
