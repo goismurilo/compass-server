@@ -1,4 +1,5 @@
 // import AppError from '@shared/errors/AppError';
+import AppError from '@shared/errors/AppError';
 import FakeTechniciansRepository from '../repositories/fakes/FakeTechniciansRepository';
 import FakeTechnicianTokensRepository from '../repositories/fakes/FakeTechnicianTokensRepository';
 import FakeHashProvider from '../providers/HashProvider/fakes/FakeHashProvider';
@@ -47,5 +48,14 @@ describe('ResetPasswordService', () => {
 
         expect(generateHash).toHaveBeenCalledWith('123123');
         expect(updateTechnician?.password).toBe('123123');
+    });
+
+    it('should be able to reset password with non-existing token', async () => {
+        expect(
+            resetPassword.execute({
+                token: 'non-existing-token',
+                password: '123123',
+            }),
+        ).rejects.toBeInstanceOf(AppError);
     });
 });
