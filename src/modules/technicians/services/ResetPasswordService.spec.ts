@@ -58,4 +58,17 @@ describe('ResetPasswordService', () => {
             }),
         ).rejects.toBeInstanceOf(AppError);
     });
+
+    it('should be able to reset password with non-existing technician', async () => {
+        const { token } = await fakeTechnicianTokensRepository.generate(
+            'non-existing-technician',
+        );
+
+        expect(
+            resetPassword.execute({
+                token,
+                password: '123123',
+            }),
+        ).rejects.toBeInstanceOf(AppError);
+    });
 });
