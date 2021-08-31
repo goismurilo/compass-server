@@ -1,5 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { inject, injectable } from 'tsyringe';
+import { isAfter, addHours } from 'date-fns'
 
 
 // import Technician from '@modules/technicians/infra/typeorm/entities/Technician';
@@ -38,6 +39,14 @@ class ResetPasswordService {
 
         if (!technician) {
             throw new AppError('Technician does not exists');
+        }
+
+        const tokenCreatAt = technicianToken.createdAt;
+        const compareDate = addHours(tokenCreatAt, 2);
+
+        if (isAfter(Date.now(), compareDate)) {
+            throw new AppError('Token expired');
+
         }
 
         technician.password = await this.hashProvider.generateHash(password);

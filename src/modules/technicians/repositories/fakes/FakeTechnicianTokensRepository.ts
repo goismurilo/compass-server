@@ -16,6 +16,8 @@ class FakeTechnicianTokensRepository
             id: uuid(),
             token: uuid(),
             technician_id,
+            createdAt: new Date(),
+            updateddAt: new Date(),
         });
 
         this.technicianTokens.push(technicianToken);
