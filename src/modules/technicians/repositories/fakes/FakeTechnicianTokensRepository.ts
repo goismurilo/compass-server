@@ -22,6 +22,16 @@ class FakeTechnicianTokensRepository
 
         return technicianToken;
     }
+
+    public async findByToken(
+        token: string,
+    ): Promise<TechnicianToken | undefined> {
+        const technicianToken = this.technicianTokens.find(
+            findToken => findToken.token === token,
+        );
+
+        return technicianToken;
+    }
 }
 
 export default FakeTechnicianTokensRepository;
