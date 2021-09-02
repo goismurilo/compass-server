@@ -7,6 +7,7 @@ import technicianRouter from '@modules/technicians/infra/http/routes/technician.
 import serviceRouter from '@modules/servicesOS/infra/http/service.routes';
 import statusRouter from '@modules/statusOS/infra/http/status.routes';
 import sessionsRouter from '@modules/technicians/infra/http/routes/sessions.routes';
+import passwordRouter from '@modules/technicians/infra/http/routes/password.routes';
 
 const routes = Router();
 
@@ -15,7 +16,9 @@ routes.use('/os', osRouter);
 routes.use('/secretary', secretaryRouter);
 routes.use('/service', serviceRouter);
 routes.use('/sessions', sessionsRouter);
-routes.use('/status', statusRouter);
+routes.use('/password', passwordRouter);
 routes.use('/technician', technicianRouter);
+
+routes.use('/status', statusRouter);
 
 export default routes;
