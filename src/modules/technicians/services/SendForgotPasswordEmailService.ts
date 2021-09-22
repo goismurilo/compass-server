@@ -34,9 +34,9 @@ class SendForgotPasswordEmailService {
             throw new AppError('Technician does not exists');
         }
 
-        await this.technicianTokensRepository.generate(technician.id);
+        const { token } = await this.technicianTokensRepository.generate(technician.id);
 
-        this.mailProvider.sendMail(email, 'Pedido de Recuperação de Senha');
+        await this.mailProvider.sendMail(email, `Pedido de Recuperação de Senha Recebido: ${token}`);
     }
 }
 
