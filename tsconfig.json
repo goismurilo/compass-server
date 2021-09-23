@@ -18,7 +18,6 @@
                 "shared/*"
             ]
         },
-        "types": [],
         "esModuleInterop": true,
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
