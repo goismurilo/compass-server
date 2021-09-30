@@ -17,7 +17,7 @@ interface IRequest {
 @injectable()
 class SendForgotPasswordEmailService {
     constructor(
-        @inject('TechnicianRepository')
+        @inject('TechniciansRepository')
         private techniciansRepository: ITechniciansRepository,
 
         @inject('MailProvider')
