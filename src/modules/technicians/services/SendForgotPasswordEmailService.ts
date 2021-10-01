@@ -36,7 +36,20 @@ class SendForgotPasswordEmailService {
 
         const { token } = await this.technicianTokensRepository.generate(technician.id);
 
-        await this.mailProvider.sendMail(email, `Pedido de Recuperação de Senha Recebido: ${token}`);
+        await this.mailProvider.sendMail({
+            to: {
+                name: technician.name,
+                email: technician.email,
+            },
+            subject: '[CompassOS] Recuperação de senha',
+            templateData: {
+                template: 'Olá, {{name}}: {{token}}',
+                variables: {
+                    name: technician.name,
+                    token
+                }
+            }
+        });
     }
 }
 
