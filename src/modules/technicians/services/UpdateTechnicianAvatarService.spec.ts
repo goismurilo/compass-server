@@ -1,18 +1,24 @@
-import FakeStorageProvider from '@shared/container/providers/StorageProvider/fakes/FakeStorageProvider';
 import AppError from '@shared/errors/AppError';
+
+import FakeStorageProvider from '@shared/container/providers/StorageProvider/fakes/FakeStorageProvider';
 import FakeTechniciansRepository from '../repositories/fakes/FakeTechniciansRepository';
 import UpdateTechnicianAvatarService from './UpdateTechnicianAvatarService';
 
-describe('UpdateTechnicianAvatar', () => {
-    it('should be able to create a new technician', async () => {
-        const fakeTechniciansRepository = new FakeTechniciansRepository();
-        const fakeStorageProvider = new FakeStorageProvider();
+let fakeTechniciansRepository: FakeTechniciansRepository;
+let fakeStorageProvider: FakeStorageProvider;
+let UpdateTechnicianAvatar: UpdateTechnicianAvatarService;
 
-        const UpdateTechnicianAvatar = new UpdateTechnicianAvatarService(
+describe('UpdateTechnicianAvatar', () => {
+    beforeEach(() => {
+        fakeTechniciansRepository = new FakeTechniciansRepository();
+        fakeStorageProvider = new FakeStorageProvider();
+
+        UpdateTechnicianAvatar = new UpdateTechnicianAvatarService(
             fakeTechniciansRepository,
             fakeStorageProvider,
         );
-
+    });
+    it('should be able to create a new technician', async () => {
         const technician = await fakeTechniciansRepository.create({
             name: 'Cristovao',
             email: 'cristovao@gmail.com',
@@ -21,39 +27,23 @@ describe('UpdateTechnicianAvatar', () => {
 
         await UpdateTechnicianAvatar.execute({
             technicianId: technician.id,
-            avatarFilename: 'technician.avatar',
+            avatarFilename: 'avatar.jpg',
         });
 
-        expect(technician.avatar).toBe('technician.avatar');
+        expect(technician.avatar).toBe('avatar.jpg');
     });
 
     it('should be able to update avatar from non existing technician', async () => {
-        const fakeTechniciansRepository = new FakeTechniciansRepository();
-        const fakeStorageProvider = new FakeStorageProvider();
-
-        const UpdateTechnicianAvatar = new UpdateTechnicianAvatarService(
-            fakeTechniciansRepository,
-            fakeStorageProvider,
-        );
-
-        expect(
+        await expect(
             UpdateTechnicianAvatar.execute({
-                technicianId: 'technician.id',
-                avatarFilename: 'technician.avatar',
+                technicianId: 'non-existing-technician',
+                avatarFilename: 'avatar.jpg',
             }),
         ).rejects.toBeInstanceOf(AppError);
     });
 
     it('should delete old avtar when updating new one', async () => {
-        const fakeTechniciansRepository = new FakeTechniciansRepository();
-        const fakeStorageProvider = new FakeStorageProvider();
-
         const deleteFile = jest.spyOn(fakeStorageProvider, 'deleteFile');
-
-        const UpdateTechnicianAvatar = new UpdateTechnicianAvatarService(
-            fakeTechniciansRepository,
-            fakeStorageProvider,
-        );
 
         const technician = await fakeTechniciansRepository.create({
             name: 'Cristovao',
@@ -63,16 +53,16 @@ describe('UpdateTechnicianAvatar', () => {
 
         await UpdateTechnicianAvatar.execute({
             technicianId: technician.id,
-            avatarFilename: 'technician.avatar',
+            avatarFilename: 'avatar.jpg',
         });
 
         await UpdateTechnicianAvatar.execute({
             technicianId: technician.id,
-            avatarFilename: 'technician.avatar2',
+            avatarFilename: 'avatar2.jpg',
         });
 
-        expect(deleteFile).toHaveBeenCalledWith('technician.avatar');
+        expect(deleteFile).toHaveBeenCalledWith('avatar.jpg');
 
-        expect(technician.avatar).toBe('technician.avatar2');
+        expect(technician.avatar).toBe('avatar2.jpg');
     });
 });

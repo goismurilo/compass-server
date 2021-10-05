@@ -51,7 +51,7 @@ describe('ResetPasswordService', () => {
     });
 
     it('should be able to reset password with non-existing token', async () => {
-        expect(
+        await expect(
             resetPassword.execute({
                 token: 'non-existing-token',
                 password: '123123',

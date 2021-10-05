@@ -5,21 +5,28 @@ import CreateTechnicianService from './CreateTechnicianService';
 
 import AuthenticateTechnicianService from './AuthenticateTechnicianService';
 
+let fakeTechniciansRepository: FakeTechniciansRepository;
+let fakeHashProvider: FakeHashProvider;
+let createTechnician: CreateTechnicianService;
+let authenticateTechnician: AuthenticateTechnicianService;
+
 describe('AuthenticateTechnicianService', () => {
+    beforeEach(() => {
+        fakeTechniciansRepository = new FakeTechniciansRepository();
+        fakeHashProvider = new FakeHashProvider();
+
+        createTechnician = new CreateTechnicianService(
+            fakeTechniciansRepository,
+            fakeHashProvider,
+        );
+
+        authenticateTechnician = new AuthenticateTechnicianService(
+            fakeTechniciansRepository,
+            fakeHashProvider,
+        );
+    });
+
     it('should be able to authenticate', async () => {
-        const fakeTechniciansRepository = new FakeTechniciansRepository();
-        const fakeHashProvider = new FakeHashProvider();
-
-        const createTechnician = new CreateTechnicianService(
-            fakeTechniciansRepository,
-            fakeHashProvider,
-        );
-
-        const authenticateTechnician = new AuthenticateTechnicianService(
-            fakeTechniciansRepository,
-            fakeHashProvider,
-        );
-
         const technician = await createTechnician.execute({
             name: 'Paulo Cristovao',
             email: 'cristovao@gmail.com',
@@ -36,15 +43,7 @@ describe('AuthenticateTechnicianService', () => {
     });
 
     it('should not be able to authenticate with not existing technician', async () => {
-        const fakeTechniciansRepository = new FakeTechniciansRepository();
-        const fakeHashProvider = new FakeHashProvider();
-
-        const authenticateTechnician = new AuthenticateTechnicianService(
-            fakeTechniciansRepository,
-            fakeHashProvider,
-        );
-
-        expect(
+        await expect(
             authenticateTechnician.execute({
                 email: 'cristovao@gmail.com',
                 password: 'cris123',
@@ -53,26 +52,13 @@ describe('AuthenticateTechnicianService', () => {
     });
 
     it('should not be able to authenticate with wrong password', async () => {
-        const fakeTechniciansRepository = new FakeTechniciansRepository();
-        const fakeHashProvider = new FakeHashProvider();
-
-        const createTechnician = new CreateTechnicianService(
-            fakeTechniciansRepository,
-            fakeHashProvider,
-        );
-
-        const authenticateTechnician = new AuthenticateTechnicianService(
-            fakeTechniciansRepository,
-            fakeHashProvider,
-        );
-
         await createTechnician.execute({
             name: 'Paulo Cristovao',
             email: 'cristovao@gmail.com',
             password: 'cris123',
         });
 
-        expect(
+        await expect(
             authenticateTechnician.execute({
                 email: 'cristovao@gmail.com',
                 password: '14421424',

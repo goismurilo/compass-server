@@ -2,11 +2,16 @@ import FakeOServicesRepository from '../repositories/fakes/FakeOServicesReposito
 
 import CreateOSService from './CreateOSService';
 
-describe('CreateOSService', () => {
-    it('should be able to create a new OS service', async () => {
-        const fakeOServices = new FakeOServicesRepository();
-        const createOrderService = new CreateOSService(fakeOServices);
+let fakeOServices: FakeOServicesRepository;
+let createOrderService: CreateOSService;
 
+describe('CreateOSService', () => {
+    beforeEach(() => {
+        fakeOServices = new FakeOServicesRepository();
+        createOrderService = new CreateOSService(fakeOServices);
+    });
+
+    it('should be able to create a new OS service', async () => {
         const orderService = await createOrderService.execute({
             clientIDFK: '12312',
             technicianIDFK: '12312',
