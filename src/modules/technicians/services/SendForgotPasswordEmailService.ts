@@ -1,5 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { inject, injectable } from 'tsyringe';
+import path from 'path';
 
 // import AppError from '@shared/errors/AppError';
 
@@ -36,6 +37,8 @@ class SendForgotPasswordEmailService {
 
         const { token } = await this.technicianTokensRepository.generate(technician.id);
 
+        const forgotPasswordTemplate = path.resolve(__dirname, '..', 'views', 'forgot_password.hbs');
+
         await this.mailProvider.sendMail({
             to: {
                 name: technician.name,
@@ -43,10 +46,10 @@ class SendForgotPasswordEmailService {
             },
             subject: '[CompassOS] Recuperação de senha',
             templateData: {
-                template: 'Olá, {{name}}: {{token}}',
+                file: forgotPasswordTemplate,
                 variables: {
                     name: technician.name,
-                    token
+                    link: `https://localhost:3000/reset_password?token=${token}`,
                 }
             }
         });
