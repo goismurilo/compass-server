@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { inject, injectable } from 'tsyringe';
 import path from 'path';
 
