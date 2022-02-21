@@ -8,6 +8,7 @@ import serviceRouter from '@modules/servicesOS/infra/http/service.routes';
 import statusRouter from '@modules/statusOS/infra/http/status.routes';
 import sessionsRouter from '@modules/technicians/infra/http/routes/sessions.routes';
 import passwordRouter from '@modules/technicians/infra/http/routes/password.routes';
+import profileRouter from '@modules/technicians/infra/http/routes/profile.routes';
 
 const routes = Router();
 
@@ -18,6 +19,8 @@ routes.use('/service', serviceRouter);
 routes.use('/sessions', sessionsRouter);
 routes.use('/password', passwordRouter);
 routes.use('/technician', technicianRouter);
+
+routes.use('/profile', profileRouter);
 
 routes.use('/status', statusRouter);
 

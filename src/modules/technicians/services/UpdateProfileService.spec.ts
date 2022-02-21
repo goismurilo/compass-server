@@ -8,7 +8,7 @@ let fakeTechniciansRepository: FakeTechniciansRepository;
 let fakeHashProvider: FakeHashProvider;
 let updateProfile: UpdateProfileService;
 
-describe('UpdateProfile', () => {
+describe('UpdateProfileService', () => {
     beforeEach(() => {
         fakeTechniciansRepository = new FakeTechniciansRepository();
         fakeHashProvider = new FakeHashProvider();
